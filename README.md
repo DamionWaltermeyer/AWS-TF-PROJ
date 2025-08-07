@@ -25,23 +25,6 @@ terraform apply
 check output for alb_dns_name and put that into your browser for a confirmation message the server is up and running. Takes a couple minutes to spin up, so if you get a bad gateway, just wait a few minutes.
 
 
-### Reasoning
-
-original prompt: 
-A set of files with the Terraform code to bring up:
-Compute infrastructure within AWS that an application could eventually run on.
-A data store in AWS, that the compute infrastructure can communicate with.
-
-
-After the follow-up questions, I tried not to over think it and just set about adding the required parts. I needed compute, network, data, and decided to add a load balancer for being vaguely production aware. 
-
-I was super rusty on terraform, not having used it regularly since 0.8 so I spent a lot of time going back and forth with docs and google and occasionally asking chatgpt to explain bits to me. I think it's much cleaner now than it would have been in 0.8 and terraform validate and fmt are nice features.  I started by looking around at current terraform on aws best practices to ensure I wasn't missing anything new for terraform and then just tried to build with them in mind. 
-
-I created a python script from some skeletons i had laying around, and created my directory structure with some modules and files to start. This was probably unnecessary, but it got me warmed up. I thought I was going to need to build in more python scripting, but that wasn't needed in the end. 
-
-
-I started with network to give compute somewhere to live, wrote compute, set up the alb and then the DB once it was running. 
-I used the security groups and routing to keep everything talking to each other. 
 
 The code’s split into modules to keep everything clean and modular:
 
@@ -82,7 +65,7 @@ PostgreSQL 14, t3.micro instance, private subnet, and locked down to only accept
 - I could add more validations, but just included the one for db_name for now. 
 - Put the state creation stuff in initTF.py
 - I could possibly tighten up the security groups a bit more, but it's really application dependent for more tweaks.
-- There are no logs added yet per the clarifying questions those were out of scope, but logging and monitoring would be great to have.
+- There are no logs added yet
 
 
 
